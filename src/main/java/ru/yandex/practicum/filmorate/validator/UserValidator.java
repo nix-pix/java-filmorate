@@ -6,11 +6,11 @@ import org.slf4j.LoggerFactory;
 import ru.yandex.practicum.filmorate.model.User;
 
 @UtilityClass
-public class UserValidatior {
-    private static final Logger log = LoggerFactory.getLogger(UserValidatior.class);
+public class UserValidator {
+    private static final Logger log = LoggerFactory.getLogger(UserValidator.class);
 
     public void validate(User user) {
-        if (user.getName().isBlank()) {
+        if (user.getName() == null) {
             user.setName(user.getLogin());
             log.info("Пустое имя пользователя было заменено на логин");
         }
