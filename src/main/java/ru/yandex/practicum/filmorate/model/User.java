@@ -15,7 +15,7 @@ public class User {
     @Email
     private String email;
     @NotBlank
-    @Pattern(regexp = "^\\S*$")
+    @Pattern(regexp = "^\\S*$") // не содержит пробелов
     @Size(max = 50)
     private String login;
     private String name;

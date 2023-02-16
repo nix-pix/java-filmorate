@@ -27,10 +27,10 @@ public class FilmService {
         filmStorage.get(filmId).getLikes().remove(userStorage.get(userId).getId());
     }
 
-    public List<Film> get10BestFilms() {
+    public List<Film> getPopular(int count) {
         List<Film> films = new ArrayList<>(filmStorage.getAll());
         Comparator<Film> comparator = (c1, c2) -> c2.getLikes().size() - c1.getLikes().size();
         films.sort(comparator);
-        return films.subList(0, 9);
+        return films.subList(0, count);
     }
 }

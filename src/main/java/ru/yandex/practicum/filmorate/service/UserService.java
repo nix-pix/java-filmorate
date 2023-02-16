@@ -1,6 +1,5 @@
 package ru.yandex.practicum.filmorate.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.user.UserStorage;
@@ -13,19 +12,18 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserStorage userStorage;
 
-    @Autowired
     public UserService(UserStorage userStorage) {
         this.userStorage = userStorage;
     }
 
-    public void addFriend(int firstUserId, int secondUserId) {
-        userStorage.get(firstUserId).getFriends().add(userStorage.get(secondUserId).getId());
-        userStorage.get(secondUserId).getFriends().add(userStorage.get(firstUserId).getId());
+    public void addFriend(int userId, int friendId) {
+        userStorage.get(userId).getFriends().add(userStorage.get(friendId).getId());
+        userStorage.get(friendId).getFriends().add(userStorage.get(userId).getId());
     }
 
-    public void deleteFriend(int firstUserId, int secondUserId) {
-        userStorage.get(firstUserId).getFriends().remove(userStorage.get(secondUserId).getId());
-        userStorage.get(secondUserId).getFriends().remove(userStorage.get(firstUserId).getId());
+    public void deleteFriend(int userId, int friendId) {
+        userStorage.get(userId).getFriends().remove(userStorage.get(friendId).getId());
+        userStorage.get(friendId).getFriends().remove(userStorage.get(userId).getId());
     }
 
     public List<User> getMutualFriends(int firstUserId, int secondUserId) {

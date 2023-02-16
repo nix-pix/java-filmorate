@@ -46,8 +46,6 @@ public class InMemoryFilmStorage implements FilmStorage {
 
     @Override
     public Film get(int id) {
-//        boolean flag = isCorrectId(id);
-//        return films.get(id);
         if (isCorrectId(id)) {
             return films.get(id);
         }

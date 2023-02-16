@@ -46,8 +46,6 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public User get(int id) {
-//        boolean flag = isCorrectId(id);
-//        return users.get(id);
         if (isCorrectId(id)) {
             return users.get(id);
         }
