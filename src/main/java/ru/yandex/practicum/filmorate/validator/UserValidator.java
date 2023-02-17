@@ -10,7 +10,7 @@ public class UserValidator {
     private static final Logger log = LoggerFactory.getLogger(UserValidator.class);
 
     public void validate(User user) {
-        if (user.getName() == null) {
+        if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
             log.info("Пустое имя пользователя было заменено на логин");
         }
