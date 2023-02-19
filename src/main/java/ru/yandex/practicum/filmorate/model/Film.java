@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Film {
-    private int id;
+    private long id;
     @NotBlank(message = "Название не может быть пустым")
     @NotNull(message = "Требуется указать название")
     private String name;
@@ -25,5 +25,5 @@ public class Film {
     private LocalDate releaseDate;
     @Positive(message = "Продолжительность фильма должна быть положительной!")
     private long duration;
-    private Set<Integer> likes = new HashSet<>();
+    private Set<Long> likes = new HashSet<>();
 }

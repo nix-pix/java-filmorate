@@ -16,7 +16,7 @@ import java.util.List;
 public class FilmService {
     private final FilmStorage filmStorage;
     private final UserStorage userStorage;
-    private int idSequence = 0;
+    private long idSequence = 0;
 
     @Autowired
     public FilmService(FilmStorage filmStorage, UserStorage userStorage) {
@@ -24,7 +24,7 @@ public class FilmService {
         this.userStorage = userStorage;
     }
 
-    private int generateId() {
+    private long generateId() {
         idSequence++;
         return idSequence;
     }
@@ -40,7 +40,7 @@ public class FilmService {
         return filmStorage.update(film);
     }
 
-    public Film getFilm(int id) {
+    public Film getFilm(long id) {
         return filmStorage.get(id);
     }
 
@@ -48,11 +48,11 @@ public class FilmService {
         return filmStorage.getAll();
     }
 
-    public void putLike(int filmId, int userId) {
+    public void putLike(long filmId, long userId) {
         filmStorage.get(filmId).getLikes().add(userStorage.get(userId).getId());
     }
 
-    public void deleteLike(int filmId, int userId) {
+    public void deleteLike(long filmId, long userId) {
         filmStorage.get(filmId).getLikes().remove(userStorage.get(userId).getId());
     }
 

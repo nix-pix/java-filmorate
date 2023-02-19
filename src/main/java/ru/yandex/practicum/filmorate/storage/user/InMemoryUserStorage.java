@@ -10,9 +10,9 @@ import java.util.Map;
 
 @Component
 public class InMemoryUserStorage implements UserStorage {
-    private final Map<Integer, User> users = new HashMap<>();
+    private final Map<Long, User> users = new HashMap<>();
 
-    private boolean isCorrectId(int id) {
+    private boolean isCorrectId(long id) {
         if (users.size() > 0 && users.containsKey(id)) {
             return true;
         } else {
@@ -35,11 +35,9 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     @Override
-    public User get(int id) {
-        if (isCorrectId(id)) {
-            return users.get(id);
-        }
-        return null;
+    public User get(long id) {
+        boolean check = isCorrectId(id);
+        return users.get(id);
     }
 
     @Override
@@ -48,7 +46,7 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(long id) {
         if (isCorrectId(id)) {
             users.remove(id);
         }

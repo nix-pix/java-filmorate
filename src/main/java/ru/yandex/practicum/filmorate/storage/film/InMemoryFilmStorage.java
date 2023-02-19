@@ -10,9 +10,9 @@ import java.util.Map;
 
 @Component
 public class InMemoryFilmStorage implements FilmStorage {
-    private final Map<Integer, Film> films = new HashMap<>();
+    private final Map<Long, Film> films = new HashMap<>();
 
-    private boolean isCorrectId(int id) {
+    private boolean isCorrectId(long id) {
         if (films.size() > 0 && films.containsKey(id)) {
             return true;
         } else {
@@ -35,11 +35,9 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public Film get(int id) {
-        if (isCorrectId(id)) {
-            return films.get(id);
-        }
-        return null;
+    public Film get(long id) {
+        boolean check = isCorrectId(id);
+        return films.get(id);
     }
 
     @Override
@@ -48,7 +46,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(long id) {
         if (isCorrectId(id)) {
             films.remove(id);
         }
