@@ -1,61 +1,66 @@
 package ru.yandex.practicum.filmorate.controller;
 
-import lombok.Getter;
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.filmorate.exception.FilmNotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.validator.FilmValidator;
+import ru.yandex.practicum.filmorate.service.FilmService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 @RestController
 @RequestMapping("/films")
 @Slf4j
-@Getter
 public class FilmController {
-    private int idSequence = 0;
-    private final Map<Integer, Film> films = new HashMap<>();
+    private final FilmService filmService;
 
-    private int generateId() {
-        idSequence++;
-        return idSequence;
+    @Autowired
+    public FilmController(FilmService filmService) {
+        this.filmService = filmService;
     }
 
     @PostMapping
-    public Film add(@Valid @RequestBody Film film) {
-        FilmValidator.validate(film);
-        film.setId(generateId());
-        films.put(film.getId(), film);
+    public Film addFilm(@Valid @RequestBody Film film) {
         log.info("Добавлен фильм: {}", film);
-        return film;
+        return filmService.addFilm(film);
     }
 
     @PutMapping
-    public Film update(@Valid @RequestBody @NonNull Film film) {
-        if (isCorrectId(film.getId())) {
-            FilmValidator.validate(film);
-            films.put(film.getId(), film);
-            log.info("Обновлен фильм: {}", film);
-        }
-        return film;
+    public Film updateFilm(@Valid @NotNull @RequestBody Film film) {
+        log.info("Обновлен фильм: {}", film);
+        return filmService.updateFilm(film);
+    }
+
+    @PutMapping("/{id}/like/{userId}")
+    public void putLike(@PathVariable long id, @PathVariable long userId) {
+        log.info("Пользователь с id: {} поставил лайк фильму с id: {}", userId, id);
+        filmService.putLike(id, userId);
+    }
+
+    @DeleteMapping("/{id}/like/{userId}")
+    public void deleteLike(@PathVariable long id, @PathVariable long userId) {
+        log.info("Пользователь с id: {} удалил лайк с фильма с id: {}", userId, id);
+        filmService.deleteLike(id, userId);
     }
 
     @GetMapping
     public Collection<Film> getAll() {
         log.info("Получены все фильмы");
-        return films.values();
+        return filmService.getAllFilms();
     }
 
-    public boolean isCorrectId(int id) {
-        if (films.size() > 0 && films.containsKey(id)) {
-            return true;
-        } else {
-            throw new FilmNotFoundException("Получен некорректный id = " + id);
-        }
+    @GetMapping("/{id}")
+    public Film getById(@PathVariable long id) {
+        log.info("Получен фильм с id: {}", id);
+        return filmService.getFilm(id);
+    }
+
+    @GetMapping("/popular")
+    public List<Film> getPopular(@RequestParam(defaultValue = "10") int count) {
+        log.info("Получен список {} популярных фильмов", count);
+        return filmService.getPopular(count);
     }
 }
