@@ -43,6 +43,6 @@ public class MpaRatingDaoImpl implements MpaRatingDao {
     }
 
     private MpaRating mapToRowMpa(ResultSet rs, int rowNum) throws SQLException {
-        return new MpaRating(rs.getInt("mpa_rating_id"), rs.getString("name"));
+        return new MpaRating(rs.getInt("mpa_rating_id"), rs.getString("mpa_rating_name"));
     }
 }

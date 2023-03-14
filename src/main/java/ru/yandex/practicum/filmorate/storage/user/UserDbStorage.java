@@ -30,7 +30,7 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public User add(User user) {
-        String sqlQuery = "INSERT INTO users(email, login, name, birthday) VALUES (?, ?, ?, ?)";
+        String sqlQuery = "INSERT INTO users(email, user_login, user_name, birthday) VALUES (?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(con -> {
             PreparedStatement statement = con.prepareStatement(sqlQuery, new String[]{"user_id"});
@@ -47,7 +47,7 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public User update(User user) {
-        String sqlQuery = "UPDATE users SET email = ?, login = ?, name = ?, birthday = ? WHERE user_id = ?";
+        String sqlQuery = "UPDATE users SET email = ?, user_login = ?, user_name = ?, birthday = ? WHERE user_id = ?";
         int recordsAffected = jdbcTemplate.update(sqlQuery,
                 user.getEmail(),
                 user.getLogin(),
@@ -83,20 +83,18 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public void delete(long id) {
-
     }
 
     @Override
     public void deleteAll() {
-
     }
 
     private User mapToRowUser (ResultSet rs, int rowNum) throws SQLException {
         return User.builder()
                 .id(rs.getLong("user_id"))
                 .email(rs.getString("email"))
-                .login(rs.getString("login"))
-                .name(rs.getString("name"))
+                .login(rs.getString("user_login"))
+                .name(rs.getString("user_name"))
                 .birthday(rs.getDate("birthday").toLocalDate())
                 .build();
     }

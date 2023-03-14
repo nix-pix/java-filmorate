@@ -35,7 +35,7 @@ public class FilmDbStorage implements FilmStorage {
 
     @Override
     public Film add(Film film) {
-        String sqlQuery = "INSERT INTO films(name, description, release_date, duration, mpa_rating_id) VALUES (?, ?, ?, ?, ?)";
+        String sqlQuery = "INSERT INTO films(film_name, description, release_date, duration, mpa_rating_id) VALUES (?, ?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(con -> {
             PreparedStatement statement = con.prepareStatement(sqlQuery, new String[]{"film_id"});
@@ -60,7 +60,7 @@ public class FilmDbStorage implements FilmStorage {
 
     @Override
     public Film update(Film film) {
-        String sqlQuery = "UPDATE films SET name = ?, description = ?, release_date = ?, duration = ?, mpa_rating_id = ? WHERE film_id = ?";
+        String sqlQuery = "UPDATE films SET film_name = ?, description = ?, release_date = ?, duration = ?, mpa_rating_id = ? WHERE film_id = ?";
         int recordsAffected = jdbcTemplate.update(sqlQuery,
                 film.getName(),
                 film.getDescription(),
@@ -134,7 +134,7 @@ public class FilmDbStorage implements FilmStorage {
         Set<Long> likes = filmLikesDao.findLikesOfFilm(rs.getLong("film_id"));
         return Film.builder()
                 .id(rs.getInt("film_id"))
-                .name(rs.getString("name"))
+                .name(rs.getString("film_name"))
                 .description(rs.getString("description"))
                 .releaseDate(rs.getDate("release_date").toLocalDate())
                 .duration(rs.getInt("duration"))
