@@ -99,8 +99,8 @@ public class FriendDaoImpl implements FriendDao {
         return User.builder()
                 .id(rs.getInt("user_id"))
                 .email(rs.getString("email"))
-                .login(rs.getString("login"))
-                .name(rs.getString("name"))
+                .login(rs.getString("user_login"))
+                .name(rs.getString("user_name"))
                 .birthday(rs.getDate("birthday").toLocalDate())
                 .build();
     }

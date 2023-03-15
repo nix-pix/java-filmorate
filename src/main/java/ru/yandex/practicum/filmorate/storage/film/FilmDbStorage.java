@@ -115,7 +115,15 @@ public class FilmDbStorage implements FilmStorage {
 
     @Override
     public List<Film> getTopRatedFilms(Integer count) {
-        String sqlQuery = "SELECT * FROM films f LEFT JOIN likes l ON f.film_id = l.film_id GROUP BY f.film_id ORDER BY COUNT(l.user_id) DESC LIMIT ?";
+        String sqlQuery = "SELECT * " +
+                "FROM films f " +
+                "LEFT JOIN likes l ON f.film_id = l.film_id " +
+                "group by f.film_id, l.film_id IN ( " +
+                "    SELECT film_id " +
+                "    FROM likes " +
+                ") " +
+                "ORDER BY COUNT(l.film_id) DESC " +
+                "LIMIT ?";
         log.info("Запрошен список популярных фильмов по количеству лайков с ограничением на выборку первых {} фильмов", count);
         return jdbcTemplate.query(sqlQuery, this::mapToRowFilm, count);
     }

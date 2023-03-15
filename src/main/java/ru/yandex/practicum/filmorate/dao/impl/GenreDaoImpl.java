@@ -50,6 +50,6 @@ public class GenreDaoImpl implements GenreDao {
     }
 
     private Genre mapToRowGenre(ResultSet rs, int rowNum) throws SQLException {
-        return new Genre(rs.getInt("genre_id"), rs.getString("name"));
+        return new Genre(rs.getInt("genre_id"), rs.getString("genre_name"));
     }
 }

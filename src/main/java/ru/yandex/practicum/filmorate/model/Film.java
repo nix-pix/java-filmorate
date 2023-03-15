@@ -25,6 +25,8 @@ public class Film {
     @NotNull(message = "Требуется указать название")
     @Size(max = 200)
     private String name;
+
+    @Size(max = 200)
     private String description;
     private LocalDate releaseDate;
 

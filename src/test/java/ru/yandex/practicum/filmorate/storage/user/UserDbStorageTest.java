@@ -7,6 +7,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import ru.yandex.practicum.filmorate.exception.UserNotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
 
@@ -19,8 +20,9 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class UserDbStorageTest {
     private final UserDbStorage userDbStorage;
 
@@ -35,7 +37,7 @@ public class UserDbStorageTest {
     }
 
     @Test
-    public void findUserById() {
+    public void getUserByIdTest() {
         Optional<User> userOptional = Optional.ofNullable(userDbStorage.get(1));
 
         assertThat(userOptional)
@@ -46,7 +48,7 @@ public class UserDbStorageTest {
     }
 
     @Test
-    public void updateUser() {
+    public void updateUserTest() {
         User updatedUser = User.builder()
                 .id(1)
                 .email("test1@email.ru")
@@ -65,7 +67,7 @@ public class UserDbStorageTest {
     }
 
     @Test
-    public void getUsers() {
+    public void getUsersTest() {
         userDbStorage.add(User.builder()
                 .email("test2@email.ru")
                 .login("test2_login")
@@ -77,7 +79,7 @@ public class UserDbStorageTest {
     }
 
     @Test
-    public void throwUserNotFoundException() {
+    public void throwUserNotFoundExceptionTest() {
         assertThatExceptionOfType(UserNotFoundException.class).isThrownBy(() -> userDbStorage.get(5));
     }
 }
