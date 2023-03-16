@@ -73,7 +73,7 @@ public class FilmDbStorage implements FilmStorage {
             throw new FilmNotFoundException("Фильм с ID " + film.getId() + " не найден!");
         }
 
-        if(film.getGenres() == null || film.getGenres().isEmpty()) {
+        if (film.getGenres() == null || film.getGenres().isEmpty()) {
             filmGenreDao.deleteGenre(film.getId());
             log.debug("Обновлен фильм с id={}", film.getId());
             return film;
@@ -136,7 +136,7 @@ public class FilmDbStorage implements FilmStorage {
     public void deleteAll() {
     }
 
-    private Film mapToRowFilm (ResultSet rs, int rowNum) throws SQLException {
+    private Film mapToRowFilm(ResultSet rs, int rowNum) throws SQLException {
         MpaRating mpa = mpaRating.getMpaById(rs.getInt("mpa_rating_id"));
         List<Genre> genre = new ArrayList<>(genreDao.getGenresByFilm(rs.getLong("film_id")));
         Set<Long> likes = filmLikesDao.findLikesOfFilm(rs.getLong("film_id"));

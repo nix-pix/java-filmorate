@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.storage.film;
+package ru.yandex.practicum.filmorate.storage;
 
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,6 +13,7 @@ import ru.yandex.practicum.filmorate.dao.MpaRatingDao;
 import ru.yandex.practicum.filmorate.exception.FilmNotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.storage.film.FilmDbStorage;
 import ru.yandex.practicum.filmorate.storage.user.UserDbStorage;
 
 import java.time.LocalDate;
@@ -92,24 +93,6 @@ public class FilmDbStorageTest {
                         assertThat(film).hasFieldOrPropertyWithValue("duration", 100L)
                 );
         assertThat(filmDbStorage.get(1).getDuration()).isEqualTo(100);
-    }
-
-    @Test
-    public void getFilmsTest() { //если отдельно запускать, то все ок
-//        Collection<Film> filmList = filmDbStorage.getAll();
-//        assertThat(filmList.size()).isEqualTo(2);
-    }
-
-    @Test
-    public void getTopRatedFilmsTest() { //если отдельно запускать, то все ок
-//        filmLikesDao.addLike(2, 1);
-//
-//        List<Film> popularFilms = filmDbStorage.getTopRatedFilms(5);
-//        Optional<Film> filmOptional = Optional.ofNullable(popularFilms.get(0));
-//
-//        assertThat(filmOptional)
-//                .isPresent()
-//                .hasValueSatisfying(film -> assertThat(film).hasFieldOrPropertyWithValue("name", "Фильм102"));
     }
 
     @Test

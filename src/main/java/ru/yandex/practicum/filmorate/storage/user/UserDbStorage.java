@@ -67,7 +67,7 @@ public class UserDbStorage implements UserStorage {
         String sqlQuery = "SELECT * FROM users WHERE user_id = ?";
         try {
             log.info("Запрошен пользователь с ID {} из БД", id);
-            return jdbcTemplate.queryForObject(sqlQuery,this::mapToRowUser, id);
+            return jdbcTemplate.queryForObject(sqlQuery, this::mapToRowUser, id);
         } catch (DataAccessException e) {
             log.warn("Не найден пользователь с ID " + id);
             throw new UserNotFoundException("Пользователь с ID " + id + " не найден!");
@@ -89,7 +89,7 @@ public class UserDbStorage implements UserStorage {
     public void deleteAll() {
     }
 
-    private User mapToRowUser (ResultSet rs, int rowNum) throws SQLException {
+    private User mapToRowUser(ResultSet rs, int rowNum) throws SQLException {
         return User.builder()
                 .id(rs.getLong("user_id"))
                 .email(rs.getString("email"))

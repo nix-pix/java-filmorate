@@ -48,10 +48,6 @@ public class UserService {
     }
 
     public void addFriend(long userId, long friendId) {
-//        User user = userStorage.get(userId);
-//        User friend = userStorage.get(friendId);
-//        user.getFriends().add(friendId);
-//        friend.getFriends().add(userId);
         userStorage.get(userId);
         userStorage.get(friendId);
 
@@ -59,8 +55,6 @@ public class UserService {
     }
 
     public void deleteFriend(long userId, long friendId) {
-//        userStorage.get(userId).getFriends().remove(friendId);
-//        userStorage.get(friendId).getFriends().remove(userId);
         userStorage.get(userId);
         userStorage.get(friendId);
 
@@ -78,16 +72,11 @@ public class UserService {
                 }
             }
         }
-//        return commonFriends;
         return friendDao.findCommonFriends(firstUserId, secondUserId);
     }
 
     public List<User> getAllFriends(long id) {
         userStorage.get(id);
         return friendDao.getFriends(id);
-//        return userStorage.get(id).getFriends()
-//                .stream()
-//                .map(friendId -> userStorage.get(friendId))
-//                .collect(Collectors.toList());
     }
 }

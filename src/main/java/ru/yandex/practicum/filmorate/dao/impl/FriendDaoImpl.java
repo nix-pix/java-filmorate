@@ -91,8 +91,7 @@ public class FriendDaoImpl implements FriendDao {
 
     private Friend mapToRowFriend(ResultSet rs, int rowNum) throws SQLException {
         return new Friend(rs.getInt("user_1_id"),
-                rs.getInt("user_2_id"),
-                rs.getBoolean("friendship_status"));
+                rs.getInt("user_2_id"));
     }
 
     private User mapToRowUser (ResultSet rs, int rowNum) throws SQLException {

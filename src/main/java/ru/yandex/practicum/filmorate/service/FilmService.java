@@ -50,31 +50,20 @@ public class FilmService {
     }
 
     public void putLike(long filmId, long userId) {
-//        filmStorage.get(filmId).getLikes().add(userStorage.get(userId).getId());
         filmStorage.get(filmId);
         userStorage.get(userId);
 
-        filmLikesDao.addLike(filmId,userId);
+        filmLikesDao.addLike(filmId, userId);
     }
 
     public void deleteLike(long filmId, long userId) {
-//        filmStorage.get(filmId).getLikes().remove(userStorage.get(userId).getId());
         filmStorage.get(filmId);
         userStorage.get(userId);
 
-        filmLikesDao.deleteLike(filmId,userId);
+        filmLikesDao.deleteLike(filmId, userId);
     }
 
     public List<Film> getPopular(int count) {
-//        List<Film> films = new ArrayList<>(filmStorage.getAll());
-//        Comparator<Film> comparator = (c1, c2) -> c2.getLikes().size() - c1.getLikes().size();
-//        films.sort(comparator);
-//        List<Film> result = new ArrayList<>();
-//        if (films.size() > count) {
-//            return films.subList(0, count);
-//        } else {
-//            return films;
-//        }
         return filmStorage.getTopRatedFilms(count);
     }
 }
