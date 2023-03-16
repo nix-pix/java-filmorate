@@ -65,7 +65,6 @@ public class FilmDbStorageTest {
     @Test
     public void getFilmByIdTest() {
         Optional<Film> filmOptional = Optional.ofNullable(filmDbStorage.get(1));
-
         assertThat(filmOptional)
                 .isPresent()
                 .hasValueSatisfying(film ->
